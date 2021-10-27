@@ -11,12 +11,11 @@ namespace CrudEmpresaFuncionario.Domain.Entities
         public Address Address { get; private set; }
         public string PhoneNumber { get; set; }
 
-        public Company(int id, string name, int idAddress, Address address, string phoneNumber)
+        public Company(int id, string name, int idAddress, string phoneNumber)
         {
             Id = id;
             Name = name;
             IdAddress = idAddress;
-            Address = address;
             PhoneNumber = phoneNumber;
         }
     }

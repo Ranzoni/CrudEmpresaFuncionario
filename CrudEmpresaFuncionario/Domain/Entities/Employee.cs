@@ -11,12 +11,11 @@ namespace CrudEmpresaFuncionario.Domain.Entities
         public Position Position { get; private set; }
         public double Salary { get; set; }
 
-        public Employee(int id, string name, int idPosition, Position position, double salary)
+        public Employee(int id, string name, int idPosition, double salary)
         {
             Id = id;
             Name = name;
             IdPosition = idPosition;
-            Position = position;
             Salary = salary;
         }
     }
