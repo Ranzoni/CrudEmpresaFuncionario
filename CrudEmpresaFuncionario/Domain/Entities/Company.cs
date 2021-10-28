@@ -1,14 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CrudEmpresaFuncionario.Domain.Entities
 {
     public class Company
     {
-        public int Id { get; private set; }
+        [Key]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public int Id { get; set; }
         [StringLength(200)]
+        [JsonProperty("nome")]
         public string Name { get; set; }
-        public int IdAddress { get; private set; }
-        public Address Address { get; private set; }
+        [ForeignKey(nameof(Address))]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public int IdAddress { get; set; }
+        [JsonProperty("endereco")]
+        public Address Address { get; set; }
+        [JsonProperty("telefone")]
         public string PhoneNumber { get; set; }
 
         public Company(int id, string name, int idAddress, string phoneNumber)

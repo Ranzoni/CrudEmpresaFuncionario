@@ -1,4 +1,6 @@
+using CrudEmpresaFuncionario.Domain.Repositories;
 using CrudEmpresaFuncionario.Infra;
+using CrudEmpresaFuncionario.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +36,8 @@ namespace CrudEmpresaFuncionario
                     builder.MigrationsAssembly("CrudEmpresaFuncionario")));
 
             services.AddScoped<SeedingService>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<ICompanyService, CompanyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

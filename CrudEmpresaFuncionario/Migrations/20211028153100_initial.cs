@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CrudEmpresaFuncionario.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,7 +63,6 @@ namespace CrudEmpresaFuncionario.Migrations
                     Name = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IdAddress = table.Column<int>(type: "int", nullable: false),
-                    AddressId = table.Column<int>(type: "int", nullable: true),
                     PhoneNumber = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
@@ -71,11 +70,11 @@ namespace CrudEmpresaFuncionario.Migrations
                 {
                     table.PrimaryKey("PK_Companies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Companies_Addresses_AddressId",
-                        column: x => x.AddressId,
+                        name: "FK_Companies_Addresses_IdAddress",
+                        column: x => x.IdAddress,
                         principalTable: "Addresses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -88,45 +87,56 @@ namespace CrudEmpresaFuncionario.Migrations
                     Name = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IdPosition = table.Column<int>(type: "int", nullable: false),
-                    PositionId = table.Column<int>(type: "int", nullable: true),
-                    Salary = table.Column<double>(type: "double", nullable: false)
+                    Salary = table.Column<double>(type: "double", nullable: false),
+                    IdCompany = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Employees", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Employees_Positions_PositionId",
-                        column: x => x.PositionId,
+                        name: "FK_Employees_Companies_IdCompany",
+                        column: x => x.IdCompany,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Employees_Positions_IdPosition",
+                        column: x => x.IdPosition,
                         principalTable: "Positions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Companies_AddressId",
+                name: "IX_Companies_IdAddress",
                 table: "Companies",
-                column: "AddressId");
+                column: "IdAddress");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employees_PositionId",
+                name: "IX_Employees_IdCompany",
                 table: "Employees",
-                column: "PositionId");
+                column: "IdCompany");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_IdPosition",
+                table: "Employees",
+                column: "IdPosition");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Companies");
-
-            migrationBuilder.DropTable(
                 name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "Addresses");
+                name: "Companies");
 
             migrationBuilder.DropTable(
                 name: "Positions");
+
+            migrationBuilder.DropTable(
+                name: "Addresses");
         }
     }
 }
