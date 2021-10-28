@@ -7,7 +7,6 @@ namespace CrudEmpresaFuncionario.Domain.Entities
     public class Address
     {
         [Key]
-        [System.Text.Json.Serialization.JsonIgnore]
         public int Id { get; set; }
         [StringLength(200)]
         [JsonProperty("logradouro")]

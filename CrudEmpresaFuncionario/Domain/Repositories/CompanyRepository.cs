@@ -28,6 +28,10 @@ namespace CrudEmpresaFuncionario.Domain.Repositories
             if (company == null)
                 throw new ApplicationException("A empresa para exclusão não existe");
 
+            var address = await _context.Addresses.FindAsync(company.IdAddress);
+            if (address != null)
+                _context.Addresses.Remove(address);
+
             _context.Companies.Remove(company);
             await _context.SaveChangesAsync();
         }

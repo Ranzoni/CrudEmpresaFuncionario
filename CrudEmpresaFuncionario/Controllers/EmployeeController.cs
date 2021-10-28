@@ -1,36 +1,38 @@
 ﻿using CrudEmpresaFuncionario.Domain.Entities;
 using CrudEmpresaFuncionario.Infra;
 using CrudEmpresaFuncionario.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CrudEmpresaFuncionario.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CompanyController : ControllerBase
+    public class EmployeeController : ControllerBase
     {
         private readonly CrudContext _context;
-        private readonly ICompanyService _companyService;
+        private readonly IEmployeeService _employeeService;
 
-        public CompanyController(CrudContext context, ICompanyService companyService)
+        public EmployeeController(CrudContext context, IEmployeeService employeeService)
         {
             _context = context;
-            _companyService = companyService;
+            _employeeService = employeeService;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Company>> GetById(int id)
+        public async Task<ActionResult<Employee>> GetById(int id)
         {
             try
             {
-                var company = await _companyService.GetByIdAsync(id);
-                if (company == null)
+                var employee = await _employeeService.GetByIdAsync(id);
+                if (employee == null)
                     return NotFound();
 
-                return company;
+                return employee;
             }
             catch (Exception e)
             {
@@ -39,12 +41,13 @@ namespace CrudEmpresaFuncionario.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Company>>> Get()
+        [Route("idcompany/{idcompany}")]
+        public async Task<ActionResult<List<Employee>>> GetByIdCompany(int idcompany)
         {
             try
             {
-                var companies = await _companyService.GetAsync();
-                return companies;
+                var employees = await _employeeService.GetByIdCompany(idcompany);
+                return employees;
             }
             catch (Exception e)
             {
@@ -53,13 +56,13 @@ namespace CrudEmpresaFuncionario.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] Company company)
+        public async Task<ActionResult> Create([FromBody] Employee employee)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    await _companyService.CreateAsync(company);
+                    await _employeeService.CreateAsync(employee);
                     transaction.Commit();
                     return Ok();
                 }
@@ -72,13 +75,13 @@ namespace CrudEmpresaFuncionario.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update([FromBody] Company company)
+        public async Task<ActionResult> Update([FromBody] Employee employee)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    await _companyService.UpdateAsync(company);
+                    await _employeeService.UpdateAsync(employee);
                     transaction.Commit();
                     return Ok();
                 }
@@ -97,7 +100,7 @@ namespace CrudEmpresaFuncionario.Controllers
             {
                 try
                 {
-                    await _companyService.DeleteAsync(id);
+                    await _employeeService.DeleteAsync(id);
                     transaction.Commit();
                     return Ok();
                 }

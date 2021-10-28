@@ -35,14 +35,12 @@ namespace CrudEmpresaFuncionario.Services
             return await _companyRepository.GetByIdAsync(id);
         }
 
-        public async Task UpdateAsync(int id, Company company)
+        public async Task UpdateAsync(Company company)
         {
-            var actualCompany = await _companyRepository.GetByIdAsync(id);
-            if (actualCompany == null || id != actualCompany.Id)
+            var actualCompany = await _companyRepository.GetByIdAsync(company.Id);
+            if (actualCompany == null)
                 return;
 
-            company.Id = id;
-            company.Address.Id = actualCompany.Address.Id;
             await _companyRepository.UpdateAsync(company);
         }
     }

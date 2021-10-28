@@ -7,13 +7,11 @@ namespace CrudEmpresaFuncionario.Domain.Entities
     public class Company
     {
         [Key]
-        [System.Text.Json.Serialization.JsonIgnore]
         public int Id { get; set; }
         [StringLength(200)]
         [JsonProperty("nome")]
         public string Name { get; set; }
         [ForeignKey(nameof(Address))]
-        [System.Text.Json.Serialization.JsonIgnore]
         public int IdAddress { get; set; }
         [JsonProperty("endereco")]
         public Address Address { get; set; }

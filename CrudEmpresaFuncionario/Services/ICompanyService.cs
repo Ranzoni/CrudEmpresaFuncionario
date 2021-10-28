@@ -9,7 +9,7 @@ namespace CrudEmpresaFuncionario.Services
         Task<Company> GetByIdAsync(int id);
         Task<List<Company>> GetAsync();
         Task CreateAsync(Company company);
-        Task UpdateAsync(int id, Company company);
+        Task UpdateAsync(Company company);
         Task DeleteAsync(int id);
     }
 }
