@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CrudEmpresaFuncionario.Domain.Entities
@@ -9,16 +8,13 @@ namespace CrudEmpresaFuncionario.Domain.Entities
         [Key]
         public int Id { get; set; }
         [StringLength(200)]
-        [JsonProperty("nome")]
         public string Name { get; set; }
         [ForeignKey(nameof(Position))]
         public int IdPosition { get; set; }
-        [JsonProperty("cargo")]
         public Position Position { get; set; }
         public double Salary { get; set; }
         [ForeignKey(nameof(Company))]
         public int IdCompany { get; set; }
-        [JsonProperty("empresa")]
         public Company Company { get; set; }
 
         public Employee(int id, string name, int idPosition, double salary, int idCompany)

@@ -29,10 +29,6 @@ namespace CrudEmpresaFuncionario.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
-                    b.Property<string>("Country")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
                     b.Property<string>("Neighborhood")
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");

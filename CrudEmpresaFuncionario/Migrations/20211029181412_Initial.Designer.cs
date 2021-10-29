@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrudEmpresaFuncionario.Migrations
 {
     [DbContext(typeof(CrudContext))]
-    [Migration("20211028153100_initial")]
-    partial class initial
+    [Migration("20211029181412_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,10 +28,6 @@ namespace CrudEmpresaFuncionario.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("City")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<string>("Country")
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace CrudEmpresaFuncionario.Domain.Entities
 {
@@ -7,7 +6,6 @@ namespace CrudEmpresaFuncionario.Domain.Entities
     {
         [Key]
         public int Id { get; private set; }
-        [JsonPropertyName("nome")]
         public string Name { get; private set; }
 
         public Position(int id, string name)
