@@ -90,7 +90,7 @@ namespace CrudEmpresaFuncionario.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             using (var transaction = _context.Database.BeginTransaction())

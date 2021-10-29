@@ -30,6 +30,12 @@ namespace CrudEmpresaFuncionario
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CrudEmpresaFuncionario", Version = "v1" });
             });
 
+            services.AddCors(options =>
+                options.AddPolicy("AllowAll", p => p
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()));
+
             var connection = Configuration["ConnectionStrings:CrudContext"];
             services.AddDbContext<CrudContext>(options =>
                 options.UseMySql(connection, ServerVersion.AutoDetect(connection), builder =>
@@ -56,6 +62,8 @@ namespace CrudEmpresaFuncionario
 
             seedingService.Seed();
 
+            app.UseCors("AllowAll");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -66,6 +74,7 @@ namespace CrudEmpresaFuncionario
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }
