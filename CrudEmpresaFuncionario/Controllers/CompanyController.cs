@@ -60,6 +60,12 @@ namespace CrudEmpresaFuncionario.Controllers
                 try
                 {
                     await _companyService.CreateAsync(company);
+                    if (_companyService.Validations().Messages.Count > 0)
+                    {
+                        transaction.Rollback();
+                        return Ok(_companyService.Validations());
+                    }
+
                     transaction.Commit();
                     return Ok();
                 }
@@ -79,6 +85,12 @@ namespace CrudEmpresaFuncionario.Controllers
                 try
                 {
                     await _companyService.UpdateAsync(company);
+                    if (_companyService.Validations().Messages.Count > 0)
+                    {
+                        transaction.Rollback();
+                        return Ok(_companyService.Validations());
+                    }
+
                     transaction.Commit();
                     return Ok();
                 }

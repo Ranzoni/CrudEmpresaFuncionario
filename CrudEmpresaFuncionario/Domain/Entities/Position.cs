@@ -6,6 +6,7 @@ namespace CrudEmpresaFuncionario.Domain.Entities
     {
         [Key]
         public int Id { get; private set; }
+        [StringLength(50)]
         public string Name { get; private set; }
 
         public Position(int id, string name)
