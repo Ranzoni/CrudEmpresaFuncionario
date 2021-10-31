@@ -39,12 +39,26 @@ namespace CrudEmpresaFuncionario.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult<PaginationResponse<List<Company>>>> Get([FromQuery] Pagination pagination)
+        [HttpGet("pagination")]
+        public async Task<ActionResult<PaginationResponse<List<Company>>>> GetWithPagination([FromQuery] Pagination pagination)
         {
             try
             {
                 var response = await _companyService.GetAsync(pagination);
+                return response;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Company>>> Get()
+        {
+            try
+            {
+                var response = await _companyService.GetAsync();
                 return response;
             }
             catch (Exception e)

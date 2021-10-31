@@ -46,6 +46,11 @@ namespace CrudEmpresaFuncionario.Services
             return new PaginationResponse<List<Company>>(companies, pagination.Page, pagination.Size, countCompanies);
         }
 
+        public async Task<List<Company>> GetAsync()
+        {
+            return await _companyRepository.Get().ToListAsync();
+        }
+
         public async Task<Company> GetByIdAsync(int id)
         {
             return await _companyRepository.GetByIdAsync(id);

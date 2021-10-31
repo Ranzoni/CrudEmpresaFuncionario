@@ -10,6 +10,7 @@ namespace CrudEmpresaFuncionario.Services
     {
         Task<Company> GetByIdAsync(int id);
         Task<PaginationResponse<List<Company>>> GetAsync(Pagination pagination);
+        Task<List<Company>> GetAsync();
         Task CreateAsync(Company company);
         Task UpdateAsync(Company company);
         Task DeleteAsync(int id);
