@@ -13,5 +13,6 @@ namespace CrudEmpresaFuncionario.Infra
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

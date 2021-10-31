@@ -3,6 +3,7 @@ using CrudEmpresaFuncionario.Dtos;
 using CrudEmpresaFuncionario.Infra;
 using CrudEmpresaFuncionario.Services;
 using CrudEmpresaFuncionario.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace CrudEmpresaFuncionario.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Company>> GetById(int id)
         {
             try
@@ -41,6 +43,7 @@ namespace CrudEmpresaFuncionario.Controllers
         }
 
         [HttpGet("pagination")]
+        [Authorize]
         public async Task<ActionResult<PaginationResponse<List<Company>>>> GetWithPagination([FromQuery] CompanyRequest companyRequest)
         {
             try
@@ -55,6 +58,7 @@ namespace CrudEmpresaFuncionario.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<List<Company>>> Get()
         {
             try
@@ -69,6 +73,7 @@ namespace CrudEmpresaFuncionario.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> Create([FromBody] Company company)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -94,6 +99,7 @@ namespace CrudEmpresaFuncionario.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<ActionResult> Update([FromBody] Company company)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -119,6 +125,7 @@ namespace CrudEmpresaFuncionario.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
             using (var transaction = _context.Database.BeginTransaction())

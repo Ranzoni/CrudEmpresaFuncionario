@@ -1,5 +1,6 @@
 ﻿using CrudEmpresaFuncionario.Domain.Entities;
 using CrudEmpresaFuncionario.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace CrudEmpresaFuncionario.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<List<Position>>> Get()
         {
             try
