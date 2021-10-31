@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CrudEmpresaFuncionario.Shared;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CrudEmpresaFuncionario.Domain.Entities
 {
-    public class Employee
+    public class Employee : Notification
     {
         [Key]
         public int Id { get; set; }
@@ -24,6 +25,18 @@ namespace CrudEmpresaFuncionario.Domain.Entities
             IdPosition = idPosition;
             Salary = salary;
             IdCompany = idCompany;
+        }
+
+        public override void Validate()
+        {
+            if (string.IsNullOrEmpty(Name))
+                AddNotification("O nome do funcionário deve ser preenchido.");
+
+            if (IdPosition <= 0 || Position == null)
+                AddNotification("O cargo do funcionário deve ser informado.");
+
+            if (IdCompany <= 0 || Company == null)
+                AddNotification("Deve ser informada a empresa a que o funcionário pertence.");
         }
     }
 }

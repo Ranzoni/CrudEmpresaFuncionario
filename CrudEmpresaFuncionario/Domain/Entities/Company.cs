@@ -29,6 +29,9 @@ namespace CrudEmpresaFuncionario.Domain.Entities
             if (string.IsNullOrEmpty(Name))
                 AddNotification("O nome da empresa deve ser preenchido.");
 
+            if (IdAddress <= 0 || Address == null)
+                AddNotification("O endereço da empresa deve ser informado.");
+
             Address.Validate();
             if (!Address.IsValid)
                 foreach (var notification in Address.Notifications.Messages)

@@ -1,11 +1,9 @@
 ﻿using CrudEmpresaFuncionario.Domain.Entities;
 using CrudEmpresaFuncionario.Infra;
 using CrudEmpresaFuncionario.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CrudEmpresaFuncionario.Controllers
@@ -63,6 +61,12 @@ namespace CrudEmpresaFuncionario.Controllers
                 try
                 {
                     await _employeeService.CreateAsync(employee);
+                    if (_employeeService.Validations().Messages.Count > 0)
+                    {
+                        transaction.Rollback();
+                        return Ok(_employeeService.Validations());
+                    }
+
                     transaction.Commit();
                     return Ok();
                 }
@@ -82,6 +86,12 @@ namespace CrudEmpresaFuncionario.Controllers
                 try
                 {
                     await _employeeService.UpdateAsync(employee);
+                    if (_employeeService.Validations().Messages.Count > 0)
+                    {
+                        transaction.Rollback();
+                        return Ok(_employeeService.Validations());
+                    }
+
                     transaction.Commit();
                     return Ok();
                 }
