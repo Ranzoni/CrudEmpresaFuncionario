@@ -41,6 +41,11 @@ namespace CrudEmpresaFuncionario.Domain.Repositories
             return _context.Companies.Include(c => c.Address).AsNoTracking();
         }
 
+        public async Task<int> CountAsync()
+        {
+            return await _context.Companies.CountAsync();
+        }
+
         public async Task<Company> GetByIdAsync(int id)
         {
             return await _context.Companies.AsNoTracking().Include(c => c.Address).FirstOrDefaultAsync(c => c.Id == id);

@@ -4,6 +4,7 @@ using CrudEmpresaFuncionario.Shared;
 using CrudEmpresaFuncionario.Utils;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CrudEmpresaFuncionario.Services
@@ -34,9 +35,15 @@ namespace CrudEmpresaFuncionario.Services
             await _companyRepository.DeleteAsync(id);
         }
 
-        public async Task<List<Company>> GetAsync()
+        public async Task<PaginationResponse<List<Company>>> GetAsync(Pagination pagination)
         {
-            return await _companyRepository.Get().ToListAsync();
+            var companies = await _companyRepository.Get()
+                .Skip((pagination.Page - 1) * pagination.Size)
+                .Take(pagination.Size)
+                .ToListAsync();
+            var countCompanies = await _companyRepository.CountAsync();
+
+            return new PaginationResponse<List<Company>>(companies, pagination.Page, pagination.Size, countCompanies);
         }
 
         public async Task<Company> GetByIdAsync(int id)

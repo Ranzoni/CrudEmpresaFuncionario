@@ -40,9 +40,16 @@ namespace CrudEmpresaFuncionario.Services
             return await _employeeRepository.GetByIdAsync(id);
         }
 
-        public async Task<List<Employee>> GetByIdCompany(int idCompany)
+        public async Task<PaginationResponse<List<Employee>>> GetByIdCompany(int idCompany, Pagination pagination)
         {
-            return await _employeeRepository.Get().Where(e => e.Company.Id == idCompany).ToListAsync();
+            var employees = await _employeeRepository.Get()
+                .Where(e => e.Company.Id == idCompany)
+                .Skip((pagination.Page - 1) * pagination.Size)
+                .Take(pagination.Size)
+                .ToListAsync();
+            var countEmployees = await _employeeRepository.CountAsync();
+
+            return new PaginationResponse<List<Employee>>(employees, pagination.Page, pagination.Size, countEmployees);
         }
 
         public async Task UpdateAsync(Employee employee)
