@@ -11,7 +11,7 @@ namespace CrudEmpresaFuncionario.Tests.Domain.Repositories
 {
     public class EmployeeRepositoryTest
     {
-        private static IEmployeeRepository GetInMemoryRepositoryRepository()
+        private static IEmployeeRepository GetInMemoryEmployeeRepository()
         {
             var builder = new DbContextOptionsBuilder<CrudContext>();
             builder.UseInMemoryDatabase("crudempresafuncionario");
@@ -47,7 +47,7 @@ namespace CrudEmpresaFuncionario.Tests.Domain.Repositories
         [Fact]
         public async void ShouldCreateEmployee()
         {
-            var employeeRepository = GetInMemoryRepositoryRepository();
+            var employeeRepository = GetInMemoryEmployeeRepository();
             var newEmployee = await CreateEmployee(employeeRepository);
             var employee = await employeeRepository.GetByIdAsync(newEmployee.Id);
             Assert.NotNull(employee);
@@ -56,7 +56,7 @@ namespace CrudEmpresaFuncionario.Tests.Domain.Repositories
         [Fact]
         public async void ShouldUpdateEmployee()
         {
-            var employeeRepository = GetInMemoryRepositoryRepository();
+            var employeeRepository = GetInMemoryEmployeeRepository();
             var employee = await CreateEmployee(employeeRepository);
             employee.Name = "Novo Nome";
             await employeeRepository.UpdateAsync(employee);
@@ -67,7 +67,7 @@ namespace CrudEmpresaFuncionario.Tests.Domain.Repositories
         [Fact]
         public async void ShouldDeleteEmployee()
         {
-            var employeeRepository = GetInMemoryRepositoryRepository();
+            var employeeRepository = GetInMemoryEmployeeRepository();
             var employee = await CreateEmployee(employeeRepository);
             var wasCreated = await employeeRepository.GetByIdAsync(employee.Id) != null;
             await employeeRepository.DeleteAsync(employee.Id);
@@ -108,7 +108,7 @@ namespace CrudEmpresaFuncionario.Tests.Domain.Repositories
                     Position = new Position(0, "RH")
                 }
             };
-            var employeeRepository = GetInMemoryRepositoryRepository();
+            var employeeRepository = GetInMemoryEmployeeRepository();
 
             foreach (var employee in employeesToCreate)
                 await CreateEmployee(employeeRepository, employee);
