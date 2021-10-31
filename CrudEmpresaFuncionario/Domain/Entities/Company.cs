@@ -30,12 +30,16 @@ namespace CrudEmpresaFuncionario.Domain.Entities
                 AddNotification("O nome da empresa deve ser preenchido.");
 
             if (IdAddress <= 0 && Address == null)
+            {
                 AddNotification("O endereço da empresa deve ser informado.");
-
-            Address.Validate();
-            if (!Address.IsValid)
-                foreach (var notification in Address.Notifications.Messages)
-                    AddNotification(notification.Message);
+            }
+            else
+            {
+                Address.Validate();
+                if (!Address.IsValid)
+                    foreach (var notification in Address.Notifications.Messages)
+                        AddNotification(notification.Message);
+            }
 
             if (PhoneNumber != null)
                 if (PhoneNumber.Length > 11 || PhoneNumber.Length < 10)
