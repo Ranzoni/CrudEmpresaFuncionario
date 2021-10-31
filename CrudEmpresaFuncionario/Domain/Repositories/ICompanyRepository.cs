@@ -6,6 +6,5 @@ namespace CrudEmpresaFuncionario.Domain.Repositories
 {
     public interface ICompanyRepository : IRepository<Company>
     {
-        Task<int> CountAsync();
     }
 }

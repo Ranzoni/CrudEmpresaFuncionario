@@ -1,4 +1,5 @@
 ﻿using CrudEmpresaFuncionario.Domain.Entities;
+using CrudEmpresaFuncionario.Dtos;
 using CrudEmpresaFuncionario.Infra;
 using CrudEmpresaFuncionario.Services;
 using CrudEmpresaFuncionario.Utils;
@@ -41,11 +42,11 @@ namespace CrudEmpresaFuncionario.Controllers
 
         [HttpGet]
         [Route("idcompany/{idcompany}")]
-        public async Task<ActionResult<PaginationResponse<List<Employee>>>> GetByIdCompany(int idcompany, [FromQuery] Pagination pagination)
+        public async Task<ActionResult<PaginationResponse<List<Employee>>>> GetByIdCompany(int idcompany, [FromQuery] EmployeeRequest employeeRequest)
         {
             try
             {
-                var response = await _employeeService.GetByIdCompany(idcompany, pagination);
+                var response = await _employeeService.GetByIdCompany(idcompany, employeeRequest);
                 return response;
             }
             catch (Exception e)

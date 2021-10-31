@@ -17,11 +17,6 @@ namespace CrudEmpresaFuncionario.Domain.Repositories
             _context = context;
         }
 
-        public async Task<int> CountAsync()
-        {
-            return await _context.Employees.CountAsync();
-        }
-
         public async Task CreateAsync(Employee entity)
         {
             _context.Employees.Add(entity);

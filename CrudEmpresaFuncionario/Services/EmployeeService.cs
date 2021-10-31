@@ -1,5 +1,6 @@
 ﻿using CrudEmpresaFuncionario.Domain.Entities;
 using CrudEmpresaFuncionario.Domain.Repositories;
+using CrudEmpresaFuncionario.Dtos;
 using CrudEmpresaFuncionario.Shared;
 using CrudEmpresaFuncionario.Utils;
 using Microsoft.EntityFrameworkCore;
@@ -40,16 +41,20 @@ namespace CrudEmpresaFuncionario.Services
             return await _employeeRepository.GetByIdAsync(id);
         }
 
-        public async Task<PaginationResponse<List<Employee>>> GetByIdCompany(int idCompany, Pagination pagination)
+        public async Task<PaginationResponse<List<Employee>>> GetByIdCompany(int idCompany, EmployeeRequest employeeRequest)
         {
-            var employees = await _employeeRepository.Get()
-                .Where(e => e.Company.Id == idCompany)
-                .Skip((pagination.Page - 1) * pagination.Size)
-                .Take(pagination.Size)
-                .ToListAsync();
-            var countEmployees = await _employeeRepository.CountAsync();
+            var query = _employeeRepository.Get();
+            if (!string.IsNullOrEmpty(employeeRequest.Name))
+                query = query.Where(c => c.Name.Contains(employeeRequest.Name));
 
-            return new PaginationResponse<List<Employee>>(employees, pagination.Page, pagination.Size, countEmployees);
+            var countEmployees = await query.CountAsync();
+            var employees = await query
+                .Where(e => e.Company.Id == idCompany)
+                .Skip((employeeRequest.Page - 1) * employeeRequest.Size)
+                .Take(employeeRequest.Size)
+                .ToListAsync();
+
+            return new PaginationResponse<List<Employee>>(employees, employeeRequest.Page, employeeRequest.Size, countEmployees);
         }
 
         public async Task UpdateAsync(Employee employee)

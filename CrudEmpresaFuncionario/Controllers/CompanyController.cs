@@ -1,4 +1,5 @@
 ﻿using CrudEmpresaFuncionario.Domain.Entities;
+using CrudEmpresaFuncionario.Dtos;
 using CrudEmpresaFuncionario.Infra;
 using CrudEmpresaFuncionario.Services;
 using CrudEmpresaFuncionario.Utils;
@@ -40,11 +41,11 @@ namespace CrudEmpresaFuncionario.Controllers
         }
 
         [HttpGet("pagination")]
-        public async Task<ActionResult<PaginationResponse<List<Company>>>> GetWithPagination([FromQuery] Pagination pagination)
+        public async Task<ActionResult<PaginationResponse<List<Company>>>> GetWithPagination([FromQuery] CompanyRequest companyRequest)
         {
             try
             {
-                var response = await _companyService.GetAsync(pagination);
+                var response = await _companyService.GetAsync(companyRequest);
                 return response;
             }
             catch (Exception e)

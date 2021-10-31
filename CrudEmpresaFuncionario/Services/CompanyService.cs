@@ -1,5 +1,6 @@
 ﻿using CrudEmpresaFuncionario.Domain.Entities;
 using CrudEmpresaFuncionario.Domain.Repositories;
+using CrudEmpresaFuncionario.Dtos;
 using CrudEmpresaFuncionario.Shared;
 using CrudEmpresaFuncionario.Utils;
 using Microsoft.EntityFrameworkCore;
@@ -35,15 +36,19 @@ namespace CrudEmpresaFuncionario.Services
             await _companyRepository.DeleteAsync(id);
         }
 
-        public async Task<PaginationResponse<List<Company>>> GetAsync(Pagination pagination)
+        public async Task<PaginationResponse<List<Company>>> GetAsync(CompanyRequest companyRequest)
         {
-            var companies = await _companyRepository.Get()
-                .Skip((pagination.Page - 1) * pagination.Size)
-                .Take(pagination.Size)
-                .ToListAsync();
-            var countCompanies = await _companyRepository.CountAsync();
+            var query = _companyRepository.Get();
+            if (!string.IsNullOrEmpty(companyRequest.Name))
+                query = query. Where(c => c.Name.Contains(companyRequest.Name));
 
-            return new PaginationResponse<List<Company>>(companies, pagination.Page, pagination.Size, countCompanies);
+            var countCompanies = await query.CountAsync();
+            var companies = await query
+                .Skip((companyRequest.Page - 1) * companyRequest.Size)
+                .Take(companyRequest.Size)
+                .ToListAsync();
+
+            return new PaginationResponse<List<Company>>(companies, companyRequest.Page, companyRequest.Size, countCompanies);
         }
 
         public async Task<List<Company>> GetAsync()
