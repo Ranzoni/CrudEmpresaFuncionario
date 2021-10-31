@@ -18,9 +18,9 @@ namespace CrudEmpresaFuncionario.Services
             await _userRepository.CreateAsync(user);
         }
 
-        public async Task<User> GetByLogin(string userName, string password)
+        public async Task<User> GetByLogin(string userName, string password, int idCompany)
         {
-            return await _userRepository.GetByLogin(userName, password);
+            return await _userRepository.GetByLogin(userName, password, idCompany);
         }
     }
 }

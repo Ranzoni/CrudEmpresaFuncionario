@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrudEmpresaFuncionario.Migrations
 {
     [DbContext(typeof(CrudContext))]
-    [Migration("20211029181412_Initial")]
+    [Migration("20211031225940_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,8 @@ namespace CrudEmpresaFuncionario.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Address2")
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("City")
                         .HasMaxLength(200)
@@ -70,7 +71,8 @@ namespace CrudEmpresaFuncionario.Migrations
                         .HasColumnType("varchar(200)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("longtext");
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("Id");
 
@@ -114,11 +116,36 @@ namespace CrudEmpresaFuncionario.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Positions");
+                });
+
+            modelBuilder.Entity("CrudEmpresaFuncionario.Domain.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdCompany")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
+
+                    b.Property<string>("Username")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdCompany");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("CrudEmpresaFuncionario.Domain.Entities.Company", b =>
@@ -149,6 +176,17 @@ namespace CrudEmpresaFuncionario.Migrations
                     b.Navigation("Company");
 
                     b.Navigation("Position");
+                });
+
+            modelBuilder.Entity("CrudEmpresaFuncionario.Domain.Entities.User", b =>
+                {
+                    b.HasOne("CrudEmpresaFuncionario.Domain.Entities.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("IdCompany")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }

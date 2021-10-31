@@ -6,6 +6,6 @@ namespace CrudEmpresaFuncionario.Domain.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {
-        Task<User> GetByLogin(string userName, string password);
+        Task<User> GetByLogin(string userName, string password, int idCompany);
     }
 }

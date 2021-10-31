@@ -42,9 +42,9 @@ namespace CrudEmpresaFuncionario.Domain.Repositories
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task<User> GetByLogin(string userName, string password)
+        public async Task<User> GetByLogin(string userName, string password, int idCompany)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Username == userName && u.Password == password);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Username == userName && u.Password == password && u.Company.Id == idCompany);
         }
 
         public async Task UpdateAsync(User entity)

@@ -128,6 +128,9 @@ namespace CrudEmpresaFuncionario.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("IdCompany")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .HasMaxLength(15)
                         .HasColumnType("varchar(15)");
@@ -137,6 +140,8 @@ namespace CrudEmpresaFuncionario.Migrations
                         .HasColumnType("varchar(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdCompany");
 
                     b.ToTable("Users");
                 });
@@ -169,6 +174,17 @@ namespace CrudEmpresaFuncionario.Migrations
                     b.Navigation("Company");
 
                     b.Navigation("Position");
+                });
+
+            modelBuilder.Entity("CrudEmpresaFuncionario.Domain.Entities.User", b =>
+                {
+                    b.HasOne("CrudEmpresaFuncionario.Domain.Entities.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("IdCompany")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }

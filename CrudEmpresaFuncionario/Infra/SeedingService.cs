@@ -15,25 +15,19 @@ namespace CrudEmpresaFuncionario.Infra
 
         public void Seed()
         {
-            if (!_context.Positions.Any())
-            {
-                var positions = new List<Position>
-                {
-                    new Position(1, "Programador"),
-                    new Position(2, "Designer"),
-                    new Position(3, "Administração"),
-                    new Position(4, "RH")
-                };
-                _context.Positions.AddRange(positions);
-                _context.SaveChanges();
-            }
+            if (_context.Positions.Any())
+                return;
 
-            if (!_context.Users.Any())
+            var positions = new List<Position>
             {
-                var user = new User("Admin", "@AdminFunc1");
-                _context.Users.Add(user);
-                _context.SaveChanges();
-            }
+                new Position(1, "Programador"),
+                new Position(2, "Designer"),
+                new Position(3, "Administração"),
+                new Position(4, "RH")
+            };
+            _context.Positions.AddRange(positions);
+            _context.SaveChanges();
+
         }
     }
 }
