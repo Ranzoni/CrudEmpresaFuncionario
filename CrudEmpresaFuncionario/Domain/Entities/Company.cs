@@ -29,7 +29,7 @@ namespace CrudEmpresaFuncionario.Domain.Entities
             if (string.IsNullOrEmpty(Name))
                 AddNotification("O nome da empresa deve ser preenchido.");
 
-            if (IdAddress <= 0 || Address == null)
+            if (IdAddress <= 0 && Address == null)
                 AddNotification("O endereço da empresa deve ser informado.");
 
             Address.Validate();
@@ -37,7 +37,7 @@ namespace CrudEmpresaFuncionario.Domain.Entities
                 foreach (var notification in Address.Notifications.Messages)
                     AddNotification(notification.Message);
 
-            if (!string.IsNullOrEmpty(PhoneNumber))
+            if (PhoneNumber != null)
                 if (PhoneNumber.Length > 11 || PhoneNumber.Length < 10)
                     AddNotification("O número de telefone é inválido. Ele deve conter o DDD mais o número.");
         }

@@ -32,10 +32,10 @@ namespace CrudEmpresaFuncionario.Domain.Entities
             if (string.IsNullOrEmpty(Name))
                 AddNotification("O nome do funcionário deve ser preenchido.");
 
-            if (IdPosition <= 0 || Position == null)
+            if (IdPosition <= 0 && Position == null)
                 AddNotification("O cargo do funcionário deve ser informado.");
 
-            if (IdCompany <= 0 || Company == null)
+            if (IdCompany <= 0 && Company == null)
                 AddNotification("Deve ser informada a empresa a que o funcionário pertence.");
         }
     }
