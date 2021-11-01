@@ -58,7 +58,6 @@ namespace CrudEmpresaFuncionario.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<List<Company>>> Get()
         {
             try

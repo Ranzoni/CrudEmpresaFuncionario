@@ -53,11 +53,6 @@ namespace CrudEmpresaFuncionario.Controllers
                 try
                 {
                     await _userService.CreateAsync(user);
-                    //if (_userService.Validations().Messages.Count > 0)
-                    //{
-                    //    transaction.Rollback();
-                    //    return Ok(_userService.Validations());
-                    //}
 
                     transaction.Commit();
                     return Ok();
