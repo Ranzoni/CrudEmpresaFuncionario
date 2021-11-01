@@ -84,6 +84,8 @@ namespace CrudEmpresaFuncionario
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CrudEmpresaFuncionario v1"));
             }
 
+            UpdateDatabase(app);
+
             seedingService.Seed();
 
             app.UseCors("AllowAll");
@@ -101,6 +103,19 @@ namespace CrudEmpresaFuncionario
                 endpoints.MapControllers();
             });
 
+        }
+
+        private static void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<CrudContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }
